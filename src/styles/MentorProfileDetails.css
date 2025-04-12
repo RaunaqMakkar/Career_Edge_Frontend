@@ -1,0 +1,73 @@
+.mentor-profile-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+/* Scope the headings to the container */
+.mentor-profile-container h2 {
+  text-align: center;
+  color: #007bff;
+  margin-bottom: 20px;
+}
+
+/* Scope the paragraphs to the container */
+.mentor-profile-container p {
+  font-size: 1rem;
+  color: #333;
+  margin: 8px 0;
+}
+
+/* Scope the strong elements to the container */
+.mentor-profile-container strong {
+  color: #555;
+}
+
+.connection-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.connection-form textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+}
+
+.connection-form button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s ease;
+}
+
+.connection-form button:hover {
+  background-color: #0056b3;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.notification {
+  color: green;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+}

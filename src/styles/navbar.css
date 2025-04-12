@@ -1,0 +1,173 @@
+/* src/styles/navbar.css */
+
+/* Basic Navbar Layout */
+.navbar {
+    background-color: #1b2b3a; /* Dark background to match your brand */
+    color: #ffffff;           /* White text color */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    position: relative;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+  
+  /* Logo Style */
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+  }
+
+  .logo:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Hamburger Menu (for mobile) - Hidden by default */
+  .hamburger {
+    display: none; /* We'll show it in mobile with a media query */
+    font-size: 24px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    padding: 5px;
+    transition: transform 0.2s ease;
+  }
+
+  .hamburger:hover {
+    transform: scale(1.1);
+  }
+  
+  
+  /* Navigation Links Container */
+  .navLinks {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+  }
+  
+  /* Each List Item */
+  .navLinks li {
+    position: relative;
+  }
+  
+  /* Link and Button Styles */
+  .navLinks li a,
+  .navLinks li button {
+    color: #ffffff;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 10px 15px;
+    border-radius: 4px;
+    position: relative;
+    letter-spacing: 0.3px;
+  }
+  
+  /* Hover State */
+  .navLinks li a:hover,
+  .navLinks li button:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  /* Active State */
+  .navLinks li a.active,
+  .navLinks li button.active {
+    color: #ff5050;
+    font-weight: 600;
+  }
+
+  /* Add underline effect on hover */
+  .navLinks li a::after,
+  .navLinks li button::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: #ff5050;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+
+  .navLinks li a:hover::after,
+  .navLinks li button:hover::after {
+    width: 70%;
+  }
+  
+  /* Responsive for Mobile */
+  @media (max-width: 768px) {
+    .hamburger {
+      display: block; /* Show hamburger on mobile */
+    }
+  
+    .navLinks {
+      display: none; /* Hide nav links by default on mobile */
+      position: absolute;
+      top: 70px;
+      right: 0;
+      flex-direction: column;
+      background-color: #1b2b3a;
+      width: 220px;
+      gap: 12px;
+      padding: 15px;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      animation: slideDown 0.3s ease-in-out;
+    }
+  
+    .navLinks.open {
+      display: flex;
+    }
+    
+    .navLinks li {
+      width: 100%;
+    }
+    
+    .navLinks li a,
+    .navLinks li button {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 12px 15px;
+    }
+    
+    .navLinks li a:hover,
+    .navLinks li button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: none;
+    }
+    
+    .navLinks li a::after,
+    .navLinks li button::after {
+      display: none;
+    }
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
