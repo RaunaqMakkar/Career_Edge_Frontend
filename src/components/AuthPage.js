@@ -49,23 +49,24 @@ const AuthPage = ({
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/auth/login", loginData);
-      if (res.data.token) {
-        localStorage.setItem("authToken", res.data.token);
-        localStorage.setItem("userRole", res.data.role.toLowerCase());
+      const response = await axios.post('/api/auth/login', loginData);
+      // Process successful login
+      if (response.data.token) {
+        localStorage.setItem("authToken", response.data.token);
+        localStorage.setItem("userRole", response.data.role.toLowerCase());
         setMessage("Login successful!");
         setLoggedIn(true);
-        setUserRole(res.data.role.toLowerCase());
-        if (res.data.role === "mentee" && res.data.menteeId) {
-          localStorage.setItem("menteeId", res.data.menteeId);
+        setUserRole(response.data.role.toLowerCase());
+        if (response.data.role === "mentee" && response.data.menteeId) {
+          localStorage.setItem("menteeId", response.data.menteeId);
         }
         navigate("/dashboard");
       } else {
         setMessage("No token received. Login failed.");
       }
     } catch (error) {
-      console.error("Login error:", error.response?.data);
-      setMessage(error.response?.data?.message || "Login failed.");
+      console.error("Login error details:", error.response || error);
+      setMessage(error.response?.data?.message || "Login failed. Please check your credentials.");
     }
   };
 
@@ -75,7 +76,7 @@ const AuthPage = ({
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/auth/signup", signupData);
+      await axios.post("/api/auth/signup", signupData);
       setMessage("Signup successful! Please log in.");
       // Optionally redirect to login or do mentor onboarding
       navigate("/login");
