@@ -21,7 +21,8 @@ const MentorProfileDetails = () => {
           setError("You must be logged in to view mentor details.");
           return;
         }
-        const res = await axios.get(`https://career-edge-backend.vercel.app/mentors/${mentorId}`);
+        // Updated URL to include /api prefix
+        const res = await axios.get(`https://career-edge-backend.vercel.app/api/mentors/${mentorId}`);
         setMentor(res.data);
       } catch (err) {
         console.error("Error fetching mentor:", err);
@@ -36,7 +37,8 @@ const MentorProfileDetails = () => {
     console.log("Mentor ID being sent:", mentorId); // Debugging
 
     try {
-      await axios.post("https://career-edge-backend.vercel.app/connections", {
+      // Updated URL to include /api prefix
+      await axios.post("https://career-edge-backend.vercel.app/api/connections", {
         mentorId, // Make sure this is the correct mentorId
         message: requestMessage,
       });
