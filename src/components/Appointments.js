@@ -17,13 +17,8 @@ const Appointments = () => {
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const token = localStorage.getItem("authToken");
-        // Use the axios instance with the correct API path
-        const res = await axios.get("https://career-edge-backend.vercel.app/api/appointments/me", {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+        // Use the axios instance without manually adding headers
+        const res = await axios.get("https://career-edge-backend.vercel.app/api/appointments/me");
         console.log("Appointments data:", res.data);
         setAppointments(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
@@ -44,13 +39,8 @@ const Appointments = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem("authToken");
-      // Use the axios instance with the correct API path
-      const res = await axios.post("https://career-edge-backend.vercel.app/api/appointments", newAppointment, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      // Use the axios instance without manually adding headers
+      const res = await axios.post("https://career-edge-backend.vercel.app/api/appointments", newAppointment);
       setAppointments([...appointments, res.data]);
       setNewAppointment({
         mentor: "",
@@ -67,13 +57,8 @@ const Appointments = () => {
 
   const handleDelete = async (appointmentId) => {
     try {
-      const token = localStorage.getItem("authToken");
-      // Use the axios instance with the correct API path
-      await axios.delete(`https://career-edge-backend.vercel.app/api/appointments/${appointmentId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      // Use the axios instance without manually adding headers
+      await axios.delete(`https://career-edge-backend.vercel.app/api/appointments/${appointmentId}`);
       setAppointments(appointments.filter(app => app._id !== appointmentId));
     } catch (err) {
       console.error("Error deleting appointment:", err);

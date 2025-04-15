@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkLoggedIn = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('authToken'); // Changed from 'token' to 'authToken'
         
         if (!token) {
           setLoading(false);
@@ -20,16 +20,14 @@ export const AuthProvider = ({ children }) => {
         }
         
         // Fetch user data with the token
-        const response = await api.get('/users/profile', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const response = await api.get('/api/users/profile'); // Added /api prefix
         
         if (response.data) {
           setUser(response.data);
         }
       } catch (error) {
         console.error('Authentication error:', error);
-        localStorage.removeItem('token'); // Clear invalid token
+        localStorage.removeItem('authToken'); // Changed from 'token' to 'authToken'
       } finally {
         setLoading(false);
       }
@@ -42,10 +40,10 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       setError(null);
-      const response = await api.post('/auth/login', { email, password });
+      const response = await api.post('/api/auth/login', { email, password }); // Added /api prefix
       
       if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('authToken', response.data.token); // Changed from 'token' to 'authToken'
         setUser(response.data.user);
         return true;
       }
@@ -59,10 +57,10 @@ export const AuthProvider = ({ children }) => {
   const signup = async (userData) => {
     try {
       setError(null);
-      const response = await api.post('/auth/signup', userData);
+      const response = await api.post('/api/auth/signup', userData); // Added /api prefix
       
       if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('authToken', response.data.token); // Changed from 'token' to 'authToken'
         setUser(response.data.user);
         return true;
       }
@@ -74,7 +72,7 @@ export const AuthProvider = ({ children }) => {
 
   // Logout function
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('authToken'); // Changed from 'token' to 'authToken'
     setUser(null);
   };
 
@@ -82,11 +80,8 @@ export const AuthProvider = ({ children }) => {
   const updateProfile = async (profileData) => {
     try {
       setError(null);
-      const token = localStorage.getItem('token');
       
-      const response = await api.put('/users/profile', profileData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.put('/api/users/profile', profileData); // Added /api prefix
       
       if (response.data) {
         setUser(response.data);
