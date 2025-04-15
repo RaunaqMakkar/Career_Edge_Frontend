@@ -17,7 +17,7 @@ const Appointments = () => {
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const res = await axios.get("/appointments/me");
+        const res = await axios.get("https://career-edge-backend.vercel.app/appointments/me");
         setAppointments(res.data);
       } catch (err) {
         console.error("Error fetching appointments:", err);
@@ -37,7 +37,7 @@ const Appointments = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/appointments", newAppointment);
+      const res = await axios.post("https://career-edge-backend.vercel.app/appointments", newAppointment);
       setAppointments([...appointments, res.data]);
       setNewAppointment({
         mentor: "",
@@ -54,7 +54,7 @@ const Appointments = () => {
 
   const handleDelete = async (appointmentId) => {
     try {
-      await axios.delete(`/appointments/${appointmentId}`);
+      await axios.delete(`https://career-edge-backend.vercel.app/appointments/${appointmentId}`);
       setAppointments(appointments.filter(app => app._id !== appointmentId));
     } catch (err) {
       console.error("Error deleting appointment:", err);
