@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios from "../api"; // Ensure the axios instance is correctly set
+import axios from "../api";
 import "../styles/Appointments.css";
 
 const Appointments = () => {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [currentUser, setCurrentUser] = useState(null);
   const [newAppointment, setNewAppointment] = useState({
     mentor: "",
     mentee: "",
@@ -13,18 +14,42 @@ const Appointments = () => {
     message: ""
   });
 
+  // Fetch current user profile first
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const res = await axios.get("/api/users/profile");
+        setCurrentUser(res.data);
+        
+        // Pre-fill the appropriate field based on user role
+        if (res.data.role === "mentor") {
+          setNewAppointment(prev => ({
+            ...prev,
+            mentor: res.data._id
+          }));
+        } else if (res.data.role === "mentee") {
+          setNewAppointment(prev => ({
+            ...prev,
+            mentee: res.data._id
+          }));
+        }
+        
+        console.log("Current user:", res.data);
+      } catch (err) {
+        console.error("Error fetching user profile:", err);
+      }
+    };
+    
+    fetchUserProfile();
+  }, []);
+
   // Fetch appointments for the logged-in user
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        // Changed from "token" to "authToken" to match what's used in AuthContext
-        const res = await axios.get("/api/appointments/me", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-          },
-        });
+        const res = await axios.get("/api/appointments/me");
         console.log("Appointments data:", res.data);
-        setAppointments(res.data); // Store appointments in state
+        setAppointments(res.data);
       } catch (err) {
         console.error("Error fetching appointments:", err);
         setError("Failed to load appointments.");
@@ -45,18 +70,25 @@ const Appointments = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Changed from "token" to "authToken" to match what's used in AuthContext
-      const res = await axios.post("/api/appointments", newAppointment, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        },
+      console.log("Creating appointment with data:", newAppointment);
+      const res = await axios.post("/api/appointments", newAppointment);
+      console.log("Appointment created:", res.data);
+      
+      // Refresh appointments list after creating a new one
+      const updatedAppointments = await axios.get("/api/appointments/me");
+      setAppointments(updatedAppointments.data);
+      
+      // Reset form
+      setNewAppointment({
+        mentor: currentUser?.role === "mentor" ? currentUser._id : "",
+        mentee: currentUser?.role === "mentee" ? currentUser._id : "",
+        appointmentDate: "",
+        message: ""
       });
-      setAppointments([...appointments, res.data]); // Update state with new appointment
-      setNewAppointment({ mentor: "", mentee: "", appointmentDate: "", message: "" });
       setError("");
     } catch (err) {
       console.error("Error creating appointment:", err);
-      setError("Failed to create appointment.");
+      setError("Failed to create appointment: " + (err.response?.data?.message || err.message));
     }
   };
 
@@ -85,40 +117,69 @@ const Appointments = () => {
         <p className="error">{error}</p>
       ) : (
         <ul className="appointments-list">
-          {appointments.map((appointment) => (
-            <li key={appointment._id} className="appointment-item">
-              <p>
-                <strong>Date:</strong>{" "}
-                {new Date(appointment.appointmentDate).toLocaleString()}
-                <br />
-                <strong>Message:</strong> {appointment.message}
-              </p>
-              <button onClick={() => handleDelete(appointment._id)}>
-                Cancel Appointment
-              </button>
-            </li>
-          ))}
+          {appointments.length > 0 ? (
+            appointments.map((appointment) => (
+              <li key={appointment._id} className="appointment-item">
+                <p>
+                  <strong>Date:</strong>{" "}
+                  {new Date(appointment.appointmentDate).toLocaleString()}
+                  <br />
+                  <strong>Status:</strong> {appointment.status}
+                  <br />
+                  <strong>Message:</strong> {appointment.message}
+                </p>
+                <button onClick={() => handleDelete(appointment._id)}>
+                  Cancel Appointment
+                </button>
+              </li>
+            ))
+          ) : (
+            <p>No appointments found. Create one below!</p>
+          )}
         </ul>
       )}
 
       <h3>Schedule a New Appointment</h3>
       <form className="appointment-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="mentor"
-          placeholder="Mentor ID"
-          value={newAppointment.mentor}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="mentee"
-          placeholder="Mentee ID"
-          value={newAppointment.mentee}
-          onChange={handleChange}
-          required
-        />
+        {currentUser?.role === "mentee" ? (
+          <>
+            <input
+              type="text"
+              name="mentor"
+              placeholder="Mentor ID"
+              value={newAppointment.mentor}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="mentee"
+              placeholder="Your ID (Mentee)"
+              value={newAppointment.mentee}
+              onChange={handleChange}
+              disabled
+            />
+          </>
+        ) : (
+          <>
+            <input
+              type="text"
+              name="mentor"
+              placeholder="Your ID (Mentor)"
+              value={newAppointment.mentor}
+              onChange={handleChange}
+              disabled
+            />
+            <input
+              type="text"
+              name="mentee"
+              placeholder="Mentee ID"
+              value={newAppointment.mentee}
+              onChange={handleChange}
+              required
+            />
+          </>
+        )}
         <input
           type="datetime-local"
           name="appointmentDate"
