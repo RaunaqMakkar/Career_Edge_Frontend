@@ -24,22 +24,22 @@ const Dashboard = ({ userRole }) => {
       setRole(storedRole);
     }
 
+    // In the fetchProfile function
     const fetchProfile = async () => {
       try {
-        const res = await axios.get("https://career-edge-backend.vercel.app/users/profile", {
-          headers: { Authorization: `${token}` },
-        });
+        // Add the /api prefix to the URL
+        const res = await axios.get("https://career-edge-backend.vercel.app/api/users/profile");
         setUser(res.data);
       } catch (err) {
         console.error("Profile fetch failed:", err);
       }
     };
-
+    
+    // In the fetchAppointments function
     const fetchAppointments = async () => {
       try {
-        const res = await axios.get("https://career-edge-backend.vercel.app/appointments/me", {
-          headers: { Authorization: `${token}` },
-        });
+        // Add the /api prefix to the URL
+        const res = await axios.get("https://career-edge-backend.vercel.app/api/appointments/me");
         setAppointments(res.data);
       } catch (err) {
         console.error("Error fetching appointments:", err);
