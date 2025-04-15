@@ -17,9 +17,10 @@ const Appointments = () => {
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
+        // Changed from "token" to "authToken" to match what's used in AuthContext
         const res = await axios.get("/api/appointments/me", {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
         });
         console.log("Appointments data:", res.data);
@@ -44,9 +45,10 @@ const Appointments = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Changed from "token" to "authToken" to match what's used in AuthContext
       const res = await axios.post("/api/appointments", newAppointment, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
       });
       setAppointments([...appointments, res.data]); // Update state with new appointment
@@ -61,9 +63,10 @@ const Appointments = () => {
   // Handle appointment deletion
   const handleDelete = async (appointmentId) => {
     try {
+      // Changed from "token" to "authToken" to match what's used in AuthContext
       await axios.delete(`/api/appointments/${appointmentId}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
       });
       setAppointments(appointments.filter((app) => app._id !== appointmentId)); // Update state

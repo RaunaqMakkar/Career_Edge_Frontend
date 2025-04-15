@@ -28,7 +28,7 @@ const Dashboard = ({ userRole }) => {
     const fetchProfile = async () => {
       try {
         // Use the axios instance without manually adding headers
-        const res = await axios.get("https://career-edge-backend.vercel.app/api/users/profile");
+        const res = await axios.get("/api/users/profile");
         setUser(res.data);
       } catch (err) {
         console.error("Profile fetch failed:", err);
@@ -38,12 +38,25 @@ const Dashboard = ({ userRole }) => {
     // In the fetchAppointments function
     const fetchAppointments = async () => {
       try {
+        // Add debugging to check token
+        const token = localStorage.getItem("authToken");
+        console.log("Using token:", token ? "Token exists" : "No token found");
+        
         // Use the axios instance without manually adding headers
-        const res = await axios.get("https://career-edge-backend.vercel.app/api/appointments/me");
+        const res = await axios.get("/api/appointments/me");
         console.log("Appointments data:", res.data);
-        setAppointments(Array.isArray(res.data) ? res.data : []);
+        console.log("Response status:", res.status);
+        
+        // Check if data is an array
+        if (Array.isArray(res.data)) {
+          setAppointments(res.data);
+        } else {
+          console.error("Unexpected data format:", res.data);
+          setAppointments([]);
+        }
       } catch (err) {
         console.error("Error fetching appointments:", err);
+        console.error("Error response:", err.response ? err.response.data : "No response data");
         setError("Failed to fetch appointments.");
       }
     };
