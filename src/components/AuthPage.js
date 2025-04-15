@@ -49,7 +49,7 @@ const AuthPage = ({
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/auth/login', loginData);
+      const response = await axios.post('https://career-edge-backend.vercel.app/api/auth/login', loginData);
       // Process successful login
       if (response.data.token) {
         localStorage.setItem("authToken", response.data.token);
@@ -76,7 +76,7 @@ const AuthPage = ({
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/auth/signup", signupData);
+      await axios.post("https://career-edge-backend.vercel.app/api/auth/signup", signupData);
       setMessage("Signup successful! Please log in.");
       // Optionally redirect to login or do mentor onboarding
       navigate("/login");
