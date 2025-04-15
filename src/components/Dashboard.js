@@ -28,7 +28,11 @@ const Dashboard = ({ userRole }) => {
     const fetchProfile = async () => {
       try {
         // Add the /api prefix to the URL
-        const res = await axios.get("https://career-edge-backend.vercel.app/api/users/profile");
+        const res = await axios.get("https://career-edge-backend.vercel.app/api/users/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
         setUser(res.data);
       } catch (err) {
         console.error("Profile fetch failed:", err);
@@ -39,8 +43,13 @@ const Dashboard = ({ userRole }) => {
     const fetchAppointments = async () => {
       try {
         // Add the /api prefix to the URL
-        const res = await axios.get("https://career-edge-backend.vercel.app/api/appointments/me");
-        setAppointments(res.data);
+        const res = await axios.get("https://career-edge-backend.vercel.app/api/appointments/me", {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        console.log("Appointments data:", res.data);
+        setAppointments(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
         console.error("Error fetching appointments:", err);
         setError("Failed to fetch appointments.");
