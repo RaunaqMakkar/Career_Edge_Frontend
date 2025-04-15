@@ -31,7 +31,7 @@ const MentorOnboarding = () => {
       const mentorId = localStorage.getItem("mentorId") || "replace_with_logic";
       const skillsArray = formData.skills.split(",").map((s) => s.trim());
 
-      await axios.put(`/mentors/${mentorId}`, {
+      await axios.put(`https://career-edge-backend.vercel.app/mentors/${mentorId}`, {
         expertise: formData.expertise,
         skills: skillsArray,
         availability: formData.availability,

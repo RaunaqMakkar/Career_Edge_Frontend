@@ -18,7 +18,7 @@ const Matchmaking = () => {
     }
     const fetchRecommendations = async () => {
       try {
-        const res = await axios.get("/matchmaking", {
+        const res = await axios.get("https://career-edge-backend.vercel.app/matchmaking", {
           headers: { Authorization: `Bearer ${token}` },
         });
         // Sort recommendations by overall match (descending)
