@@ -1,6 +1,5 @@
-// src/components/Appointments.js
 import React, { useEffect, useState } from "react";
-import axios from "../api";
+import axios from "../api"; // Ensure the axios instance is correctly set
 import "../styles/Appointments.css";
 
 const Appointments = () => {
@@ -14,13 +13,17 @@ const Appointments = () => {
     message: ""
   });
 
+  // Fetch appointments for the logged-in user
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        // Use the axios instance without manually adding headers
-        const res = await axios.get("https://career-edge-backend.vercel.app/api/appointments/me");
+        const res = await axios.get("/api/appointments/me", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
         console.log("Appointments data:", res.data);
-        setAppointments(Array.isArray(res.data) ? res.data : []);
+        setAppointments(res.data); // Store appointments in state
       } catch (err) {
         console.error("Error fetching appointments:", err);
         setError("Failed to load appointments.");
@@ -32,22 +35,22 @@ const Appointments = () => {
     fetchAppointments();
   }, []);
 
+  // Handle form input changes
   const handleChange = (e) => {
     setNewAppointment({ ...newAppointment, [e.target.name]: e.target.value });
   };
 
+  // Handle new appointment creation
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Use the axios instance without manually adding headers
-      const res = await axios.post("https://career-edge-backend.vercel.app/api/appointments", newAppointment);
-      setAppointments([...appointments, res.data]);
-      setNewAppointment({
-        mentor: "",
-        mentee: "",
-        appointmentDate: "",
-        message: ""
+      const res = await axios.post("/api/appointments", newAppointment, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       });
+      setAppointments([...appointments, res.data]); // Update state with new appointment
+      setNewAppointment({ mentor: "", mentee: "", appointmentDate: "", message: "" });
       setError("");
     } catch (err) {
       console.error("Error creating appointment:", err);
@@ -55,11 +58,15 @@ const Appointments = () => {
     }
   };
 
+  // Handle appointment deletion
   const handleDelete = async (appointmentId) => {
     try {
-      // Use the axios instance without manually adding headers
-      await axios.delete(`https://career-edge-backend.vercel.app/api/appointments/${appointmentId}`);
-      setAppointments(appointments.filter(app => app._id !== appointmentId));
+      await axios.delete(`/api/appointments/${appointmentId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setAppointments(appointments.filter((app) => app._id !== appointmentId)); // Update state
     } catch (err) {
       console.error("Error deleting appointment:", err);
       setError("Failed to delete appointment.");

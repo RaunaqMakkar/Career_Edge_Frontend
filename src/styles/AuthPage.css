@@ -1,3 +1,4 @@
+/* src/styles/AuthPage.css */
 .auth-page-container {
   min-height: calc(100vh - 60px);
   background: linear-gradient(135deg, #f0f4f8 0%, #e6edf5 100%);
