@@ -45,17 +45,17 @@ const Profile = () => {
     setMessage("");
     try {
       // 1) Get base user info (name, email, role)
-      const userRes = await axios.get("https://career-edge-backend.vercel.app/users/profile");
+      const userRes = await axios.get("https://career-edge-backend.vercel.app/api/users/profile");
       setUser(userRes.data);
       setFormData((prev) => ({
         ...prev,
         name: userRes.data.name || "",
         email: userRes.data.email || "",
       }));
-
+  
       // 2) If user is a mentor, fetch mentor doc
       if (userRes.data.role === "mentor") {
-        const mentorRes = await axios.get("https://career-edge-backend.vercel.app/mentors");
+        const mentorRes = await axios.get("https://career-edge-backend.vercel.app/api/mentors");
         const foundMentor = mentorRes.data.find(
           (m) => m.user._id === userRes.data._id
         );
@@ -74,7 +74,7 @@ const Profile = () => {
       }
       // 3) If user is a mentee, fetch mentee doc
       else if (userRes.data.role === "mentee") {
-        const menteeRes = await axios.get("https://career-edge-backend.vercel.app/mentees");
+        const menteeRes = await axios.get("https://career-edge-backend.vercel.app/api/mentees");
         const foundMentee = menteeRes.data.find(
           (mn) => mn.user._id === userRes.data._id
         );
@@ -136,15 +136,15 @@ const Profile = () => {
     setMessage("");
     try {
       // 1) Update the user (name, email, password)
-      await axios.put("https://career-edge-backend.vercel.app/users/profile", {
+      await axios.put("https://career-edge-backend.vercel.app/api/users/profile", {
         name: formData.name,
         email: formData.email,
         password: formData.password ? formData.password : undefined,
       });
-
+  
       // 2) If mentor, update mentor fields
       if (user?.role === "mentor" && mentor) {
-        await axios.put(`https://career-edge-backend.vercel.app//mentors/${mentor._id}`, {
+        await axios.put(`https://career-edge-backend.vercel.app/api/mentors/${mentor._id}`, {
           expertise: formData.expertise,
           skills: formData.skills,
           availability: formData.availability,
@@ -153,10 +153,10 @@ const Profile = () => {
           rates: formData.rates,
         });
       }
-
+  
       // 3) If mentee, update mentee fields (including preferredSkills)
       if (user?.role === "mentee" && mentee) {
-        await axios.put(`/mentees/${mentee._id}`, {
+        await axios.put(`https://career-edge-backend.vercel.app/api/mentees/${mentee._id}`, {
           interests: formData.interests,
           goals: formData.goals,
           preferredSkills: formData.preferredSkills,
