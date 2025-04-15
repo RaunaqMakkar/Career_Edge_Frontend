@@ -27,7 +27,7 @@ const Dashboard = ({ userRole }) => {
     const fetchProfile = async () => {
       try {
         const res = await axios.get("https://career-edge-backend.vercel.app/users/profile", {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `${token}` },
         });
         setUser(res.data);
       } catch (err) {
@@ -38,7 +38,7 @@ const Dashboard = ({ userRole }) => {
     const fetchAppointments = async () => {
       try {
         const res = await axios.get("https://career-edge-backend.vercel.app/appointments/me", {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `${token}` },
         });
         setAppointments(res.data);
       } catch (err) {
