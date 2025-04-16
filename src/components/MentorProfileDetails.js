@@ -21,7 +21,7 @@ const MentorProfileDetails = () => {
           setError("You must be logged in to view mentor details.");
           return;
         }
-        // Updated URL to include /api prefix
+        // Use relative URL with axios instance
         const res = await axios.get(`https://career-edge-backend.vercel.app/api/mentors/${mentorId}`);
         setMentor(res.data);
       } catch (err) {
@@ -37,16 +37,26 @@ const MentorProfileDetails = () => {
     console.log("Mentor ID being sent:", mentorId); // Debugging
 
     try {
-      // Updated URL to include /api prefix
-      await axios.post("https://career-edge-backend.vercel.app/api/connections", {
-        mentorId, // Make sure this is the correct mentorId
+      // Use axios instance with proper headers
+      const response = await axios.post('https://career-edge-backend.vercel.app/api/connections', {
+        mentorId: mentorId,
         message: requestMessage,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        }
       });
 
+      console.log("Connection response:", response.data);
       setNotification("Connection request sent! Wait for mentor approval.");
     } catch (err) {
       console.error("Error sending connection request:", err);
-      setError("Failed to send connection request.");
+      if (err.response && err.response.data && err.response.data.error) {
+        setError(err.response.data.error);
+      } else {
+        setError("Failed to send connection request.");
+      }
     }
   };
 
