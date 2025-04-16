@@ -21,17 +21,25 @@ const Chatbot = () => {
     setError("");
 
     try {
-      // Update the URL to use the correct endpoint with /api prefix
-      const response = await axios.post("https://career-edge-backend.vercel.app/api/chat", {
-        message: input.trim(),
-        conversation: updatedConversation, // optional conversation context
+      // Using axios instance with proper headers
+      const response = await axios.post("/api/chat", {
+        message: input.trim()
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
-      // Update to handle both possible response formats
-      const botReply = { 
-        role: "bot", 
-        content: response.data.response || response.data.reply 
-      };
-      setConversation([...updatedConversation, botReply]);
+      
+      // Check if we have a valid response
+      if (response.data && (response.data.response || response.data.reply)) {
+        const botReply = { 
+          role: "bot", 
+          content: response.data.response || response.data.reply 
+        };
+        setConversation([...updatedConversation, botReply]);
+      } else {
+        throw new Error("Invalid response format from server");
+      }
     } catch (err) {
       console.error("Error sending message:", err);
       setError("Failed to get a response. Please try again.");
@@ -71,7 +79,9 @@ const Chatbot = () => {
           onKeyDown={handleKeyDown}
           placeholder="Ask for career guidance..."
         />
-        <button onClick={sendMessage}>Send</button>
+        <button onClick={sendMessage} disabled={loading}>
+          {loading ? "Sending..." : "Send"}
+        </button>
       </div>
     </div>
   );
