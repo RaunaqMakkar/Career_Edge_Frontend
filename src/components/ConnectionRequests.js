@@ -13,7 +13,8 @@ const ConnectionRequests = () => {
     const fetchRequests = async () => {
       try {
         console.log("Fetching connection requests...");
-        const res = await axios.get("https://career-edge-backend.vercel.app/connections/requests");
+        // Use the relative path with the axios instance
+        const res = await axios.get("/api/connections/requests");
         console.log("Response:", res.data);
         setRequests(res.data);
       } catch (err) {
@@ -28,7 +29,8 @@ const ConnectionRequests = () => {
   
   const handleAccept = async (requestId) => {
     try {
-      await axios.put(`https://career-edge-backend.vercel.app/connect/accept/${requestId}`);
+      // Use the relative path with the axios instance
+      await axios.put(`/api/connections/accept/${requestId}`);
       setRequests(requests.filter((r) => r._id !== requestId));
     } catch (err) {
       console.error("Error accepting request:", err);
@@ -38,7 +40,8 @@ const ConnectionRequests = () => {
 
   const handleDecline = async (requestId) => {
     try {
-      await axios.put(`https://career-edge-backend.vercel.app/connect/decline/${requestId}`);
+      // Use the relative path with the axios instance
+      await axios.put(`/api/connections/decline/${requestId}`);
       setRequests(requests.filter((r) => r._id !== requestId));
     } catch (err) {
       console.error("Error declining request:", err);
