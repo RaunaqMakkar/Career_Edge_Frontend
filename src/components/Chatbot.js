@@ -22,7 +22,7 @@ const Chatbot = () => {
 
     try {
       // Make the POST request to the chat endpoint (backend baseURL should be set in axios instance)
-      const response = await axios.post("https://career-edge-backend.vercel.app/chat", {
+      const response = await axios.post("https://career-edge-backend.vercel.app/api/chat", {
         message: input.trim(),
         conversation: updatedConversation, // optional conversation context
       });
