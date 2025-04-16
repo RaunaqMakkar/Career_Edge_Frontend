@@ -21,13 +21,16 @@ const Chatbot = () => {
     setError("");
 
     try {
-      // Make the POST request to the chat endpoint (backend baseURL should be set in axios instance)
-      const response = await axios.post("https://career-edge-backend.vercel.app/chat", {
+      // Update the URL to use the correct endpoint with /api prefix
+      const response = await axios.post("https://career-edge-backend.vercel.app/api/chat", {
         message: input.trim(),
         conversation: updatedConversation, // optional conversation context
       });
-      // Append the chatbot reply to the conversation history
-      const botReply = { role: "bot", content: response.data.reply };
+      // Update to handle both possible response formats
+      const botReply = { 
+        role: "bot", 
+        content: response.data.response || response.data.reply 
+      };
       setConversation([...updatedConversation, botReply]);
     } catch (err) {
       console.error("Error sending message:", err);
