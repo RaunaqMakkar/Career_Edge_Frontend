@@ -1,15 +1,21 @@
 /* src/styles/Profile.css */
 
 /* Container */
+/* Adjust the profile container to prevent navbar overlap */
 .profile-container {
-  max-width: 800px;
-  margin: 60px auto;
-  padding: 35px;
+  max-width: 850px;
+  margin: 100px auto 30px; /* Increased top margin to prevent navbar overlap */
+  padding: 30px;
   background: #ffffff;
   border-radius: 12px;
   box-shadow: var(--box-shadow);
+  text-align: center;
+  
+  /* Adjust height calculation */
+  min-height: calc(100vh - 140px);
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
   animation: fadeIn 0.5s ease-out;
-  transition: all 0.3s ease;
 }
 
 .profile-title {
