@@ -1,45 +1,22 @@
 /* src/styles/AuthPage.css */
 .auth-page-container {
-  min-height: calc(100vh - 60px);
+  min-height: 100vh;
+  width: 100%;
   background: linear-gradient(135deg, #f0f4f8 0%, #e6edf5 100%);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 30px 15px;
+  padding: 80px 15px 30px; /* Increased top padding to prevent navbar overlap */
   position: relative;
   overflow: hidden;
   animation: fadeIn 0.5s ease-out;
-}
-
-.auth-page-container::before {
-  content: '';
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-  border-radius: 50%;
-  top: -150px;
-  right: -150px;
-  opacity: 0.1;
-  z-index: 0;
-}
-
-.auth-page-container::after {
-  content: '';
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  background: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-dark) 100%);
-  border-radius: 50%;
-  bottom: -100px;
-  left: -100px;
-  opacity: 0.1;
-  z-index: 0;
+  box-sizing: border-box;
 }
 
 .auth-box {
   background-color: #fff;
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   padding: 40px 30px;
   border-radius: 12px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
@@ -48,6 +25,7 @@
   animation: slideUp 0.5s ease-out;
   border-top: 4px solid var(--primary-color);
   overflow: hidden;
+  margin: 0 auto;
 }
 
 .auth-box::before {

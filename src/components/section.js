@@ -51,46 +51,46 @@ const Sections = () => {
       </section>
 
       <section id="about" className="about">
-        <h2 className="shiny">Shiny Happy Clients</h2>
+        <h2 className="shiny">Success Stories</h2>
         <div className="reviews">
           <div className="review-card">
             <p>★★★★★</p>
-            <h3>“I'm addicted to the Cleanic!”</h3>
+            <h3>"Career transformation!"</h3>
             <p>
-              “I'm a testimonial. Click to edit me and add text that says something nice about you and your services.”
+              "Career Edge helped me identify my strengths and connect with a mentor who guided me to a 40% salary increase within 6 months."
             </p>
             <p>
-              <strong>Jane Deirs, AR</strong>
-            </p>
-          </div>
-          <div className="review-card">
-            <p>★★★★★</p>
-            <h3>“My flat looks like a boutique hotel”</h3>
-            <p>
-              “I'm a testimonial. Click to edit me and add text that says something nice about you and your services.”
-            </p>
-            <p>
-              <strong>Eric Laguardia, CA</strong>
+              <strong>Priya Sharma, Delhi</strong>
             </p>
           </div>
           <div className="review-card">
             <p>★★★★★</p>
-            <h3>“Soft perfection”</h3>
+            <h3>"Found my dream job"</h3>
             <p>
-              “I'm a testimonial. Click to edit me and add text that says something nice about you and your services.”
+              "The AI recommendations were spot-on! I discovered opportunities I never would have found on traditional job boards."
             </p>
             <p>
-              <strong>Lena Rogel, RI</strong>
+              <strong>Rahul Verma, Mumbai</strong>
             </p>
           </div>
           <div className="review-card">
             <p>★★★★★</p>
-            <h3>“I'm obsessed”</h3>
+            <h3>"Invaluable mentorship"</h3>
             <p>
-              “I'm a testimonial. Click to edit me and add text that says something nice about you and your services.”
+              "The mentor matching algorithm connected me with an industry leader who helped me navigate a challenging career transition."
             </p>
             <p>
-              <strong>Jean McDermott, CT</strong>
+              <strong>Ananya Patel, Bangalore</strong>
+            </p>
+          </div>
+          <div className="review-card">
+            <p>★★★★★</p>
+            <h3>"Skills that matter"</h3>
+            <p>
+              "The personalized learning paths helped me focus on developing skills that actually made a difference in my job search."
+            </p>
+            <p>
+              <strong>Vikram Singh, Jaipur</strong>
             </p>
           </div>
         </div>
@@ -100,7 +100,7 @@ const Sections = () => {
       <section id="contact" className="section contact">
         <div className="overlay">
           <h2>Contact Us</h2>
-          <p>📍 Location: [Jaipur, India]</p>
+          <p>📍 Location: Jaipur, India</p>
           <p>📧 Email: raunaq.makkarpc@gmail.com</p>
           <p>📞 Phone: +91 1234506789</p>
           <div className="social-icons">

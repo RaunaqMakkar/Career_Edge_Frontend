@@ -1,6 +1,6 @@
 /* src/styles/homepage.css */
 .home-section {
-    min-height: calc(100vh - 60px); /* subtract navbar height if needed */
+    min-height: 100vh; /* Full viewport height */
     background-color: #f4f6f7;
     display: flex;
     justify-content: center;
@@ -9,9 +9,13 @@
     position: relative;
     overflow: hidden;
     background-image: linear-gradient(135deg, #f4f6f7 0%, #e9f0f4 100%);
-  }
+    padding: 80px 20px; /* Add padding all around */
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 100px; /* Add bottom margin to create space */
+}
   
-  .home-content {
+.home-content {
     max-width: 700px;
     margin: 0 auto;
     padding: 40px;
@@ -21,25 +25,30 @@
     transform: translateY(0);
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     animation: fadeIn 1s ease-in-out;
-  }
-  
-  .home-content:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-  }
-  
-  .home-content h1 {
-    font-size: 3rem;
-    margin-bottom: 25px;
+}
+
+/* Add styles for the career growth section */
+.career-growth-section {
+    padding: 80px 20px;
+    background-color: #ffffff;
+    text-align: center;
+    margin-top: 100px; /* Add top margin to create space */
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.section-title {
+    margin-bottom: 40px;
     color: #1b2b3a;
+    font-size: 2.5rem;
     font-weight: 700;
-    letter-spacing: -0.5px;
-    line-height: 1.2;
     position: relative;
     padding-bottom: 15px;
-  }
-  
-  .home-content h1::after {
+    display: inline-block;
+}
+
+.section-title::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -47,59 +56,43 @@
     transform: translateX(-50%);
     width: 80px;
     height: 3px;
-    background-color: #ff5050;
+    background-color: #4a6cf7;
     border-radius: 2px;
-  }
-  
-  .home-content p {
-    font-size: 1.2rem;
-    margin-bottom: 25px;
-    line-height: 1.7;
-    color: #444;
-    font-weight: 400;
-    max-width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .get-started-btn {
-    display: inline-block;
-    background-color: #ff5050;
-    color: #fff;
-    padding: 14px 28px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-size: 1.1rem;
-    font-weight: 600;
+}
+
+.features-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 80, 80, 0.3);
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-    letter-spacing: 0.5px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .get-started-btn:hover {
-    background-color: #e64545;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(255, 80, 80, 0.4);
-  }
-  
-  .get-started-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 10px rgba(255, 80, 80, 0.3);
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+    border-left: 3px solid #4a6cf7;
+    text-align: left;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card h3 {
+    color: #4a6cf7;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.feature-card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Keep existing styles below */
   

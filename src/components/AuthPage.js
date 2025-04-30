@@ -98,7 +98,7 @@ const AuthPage = ({
   return (
     <div className="auth-page-container">
       <div className="auth-box">
-        <div className="tabs">
+        <div className={`tabs ${activeTab === "signup" ? "signup" : ""}`}>
           <button
             className={activeTab === "login" ? "active" : ""}
             onClick={() => handleTabSwitch("login")}
